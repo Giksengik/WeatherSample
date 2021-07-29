@@ -10,13 +10,17 @@ import ru.giksengik.weathersample.databinding.FragmentWeatherListBinding
 
 class WeatherList : Fragment() {
 
-    private val binding by viewBinding(FragmentWeatherListBinding::bind)
+    private var binding : FragmentWeatherListBinding? = null
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = binding.root
+    ): View?{
+        binding = FragmentWeatherListBinding.inflate(inflater)
+
+        return binding?.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
