@@ -1,4 +1,5 @@
 package ru.giksengik.weathersample.network
 
-class WeatherNetworkManager {
+class WeatherNetworkManager : RemoteWeatherDataProvider {
+
 }
