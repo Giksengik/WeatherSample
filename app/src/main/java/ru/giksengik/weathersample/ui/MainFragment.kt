@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import ru.giksengik.weathersample.R
 import ru.giksengik.weathersample.databinding.FragmentMainBinding
+
 
 class MainFragment : Fragment() {
 
@@ -42,7 +40,17 @@ class MainFragment : Fragment() {
         binding?.let { binding ->
             val navController = binding.mainNavHost.findNavController()
             binding.appToolbar.setupWithNavController(navController, binding.drawerLayout)
+            setupDrawerToggle()
         }
+    }
+
+    private fun setupDrawerToggle() =
+        activity?.let{  activity ->
+            val drawerToggle = ActionBarDrawerToggle(activity, binding?.drawerLayout, binding?.appToolbar,
+                R.string.open_drawer_text, R.string.close_drawer_text)
+            drawerToggle.isDrawerIndicatorEnabled = true
+            drawerToggle.syncState()
+            binding?.drawerLayout?.addDrawerListener(drawerToggle)
     }
 
 
