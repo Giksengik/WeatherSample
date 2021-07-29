@@ -8,10 +8,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.giksengik.weathersample.R
 import ru.giksengik.weathersample.databinding.FragmentMainBinding
 
-
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private var binding : FragmentMainBinding? = null

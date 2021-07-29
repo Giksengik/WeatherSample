@@ -1,4 +1,7 @@
 package ru.giksengik.weathersample.repositories
 
-class WeatherRepositoryImpl {
+import javax.inject.Inject
+
+class WeatherRepositoryImpl @Inject constructor() : WeatherRepository{
+
 }
