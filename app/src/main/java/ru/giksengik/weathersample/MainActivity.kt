@@ -1,4 +1,4 @@
-package ru.giksengik.weathersample.ui
+package ru.giksengik.weathersample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
