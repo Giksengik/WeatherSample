@@ -1,7 +1,8 @@
-package ru.giksengik.weathersample
+package ru.giksengik.weathersample.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.giksengik.weathersample.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
