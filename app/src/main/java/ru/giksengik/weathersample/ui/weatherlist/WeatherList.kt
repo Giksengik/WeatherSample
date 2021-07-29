@@ -1,4 +1,4 @@
-package ru.giksengik.weathersample.ui
+package ru.giksengik.weathersample.ui.weatherlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

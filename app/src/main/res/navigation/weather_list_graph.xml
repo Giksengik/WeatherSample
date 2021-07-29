@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/weatherList"
-        android:name="ru.giksengik.weathersample.ui.WeatherList"
+        android:name="ru.giksengik.weathersample.ui.weatherlist.WeatherList"
         android:label="@string/title_weather_list"
         tools:layout="@layout/fragment_weather_list" />
 </navigation>
