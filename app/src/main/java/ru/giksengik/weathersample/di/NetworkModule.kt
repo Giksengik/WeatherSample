@@ -1,11 +1,14 @@
 package ru.giksengik.weathersample.di
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,6 +26,16 @@ object  NetworkModule {
     private const val WRITE_TIMEOUT = 30L
     private const val READ_TIMEOUT = 10L
 
+
+    @Provides
+    @Reusable
+    fun provideJson() = Json {
+        prettyPrint = true
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+    }
+
+
     @Provides
     @Reusable
     fun provideHttpClient(apiKeyInterceptor: ApiKeyInterceptor) : OkHttpClient =
@@ -37,10 +50,11 @@ object  NetworkModule {
 
     @Provides
     @Reusable
-    fun provideRetrofit(httpClient: OkHttpClient) : Retrofit =
+    fun provideRetrofit(httpClient: OkHttpClient, json : Json) : Retrofit =
         Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/")
             .client(httpClient)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
 
     @Provides
