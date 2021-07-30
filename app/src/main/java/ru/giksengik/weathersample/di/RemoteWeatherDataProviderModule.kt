@@ -11,7 +11,6 @@ import ru.giksengik.weathersample.network.WeatherNetworkManager
 @Module
 @InstallIn(SingletonComponent::class)
 interface RemoteWeatherDataProviderModule {
-
     @Binds
     fun bindRemoteWeatherDataProvider(weatherNetworkManager: WeatherNetworkManager) : RemoteWeatherDataProvider
 }
