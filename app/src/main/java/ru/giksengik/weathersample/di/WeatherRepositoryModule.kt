@@ -13,6 +13,7 @@ import ru.giksengik.weathersample.repositories.WeatherRepositoryImpl
 interface WeatherRepositoryModule {
 
     @Binds
+    @ViewModelScoped
     fun bindWeatherRepository(weatherRepositoryImpl: WeatherRepositoryImpl) : WeatherRepository
 
 }

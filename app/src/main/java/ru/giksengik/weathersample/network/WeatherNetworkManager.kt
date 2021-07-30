@@ -1,5 +1,7 @@
 package ru.giksengik.weathersample.network
 
-class WeatherNetworkManager : RemoteWeatherDataProvider {
+import javax.inject.Inject
+
+class WeatherNetworkManager @Inject constructor(val api : WeatherApiJsonPlaceholder): RemoteWeatherDataProvider {
 
 }
