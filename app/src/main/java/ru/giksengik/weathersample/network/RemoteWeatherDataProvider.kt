@@ -1,5 +1,7 @@
 package ru.giksengik.weathersample.network
 
-interface RemoteWeatherDataProvider {
+import ru.giksengik.weathersample.network.request.Coordinates
 
+interface RemoteWeatherDataProvider {
+    fun getWeather(coordinates: Coordinates)
 }

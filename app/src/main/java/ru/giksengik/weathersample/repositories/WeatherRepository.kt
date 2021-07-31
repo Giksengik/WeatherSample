@@ -1,5 +1,7 @@
 package ru.giksengik.weathersample.repositories
 
-interface WeatherRepository {
+import ru.giksengik.weathersample.network.request.Coordinates
 
+interface WeatherRepository {
+    fun getWeather(coordinates: Coordinates)
 }
