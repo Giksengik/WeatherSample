@@ -8,6 +8,6 @@ data class WeatherData (
     val timezoneOffset: Long,
     val currentWeather: CurrentWeather,
     val hourlyWeather : List<CurrentWeather>,
-    val dailyWeather: DailyWeather,
+    val dailyWeather: List<DailyWeather>,
     val weatherAlerts : List<WeatherAlert>
     )
