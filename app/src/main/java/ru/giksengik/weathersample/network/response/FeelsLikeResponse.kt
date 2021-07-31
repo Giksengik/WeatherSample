@@ -9,4 +9,4 @@ data class FeelsLikeResponse (
     @SerialName("night") val night: Double = 0.0,
     @SerialName("eve") val eve: Double = 0.0,
     @SerialName("morn") val morn: Double = 0.0
-        )
+)
