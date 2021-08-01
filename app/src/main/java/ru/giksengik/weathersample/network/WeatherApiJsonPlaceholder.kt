@@ -1,10 +1,9 @@
 package ru.giksengik.weathersample.network
 
-import retrofit2.Call
+
 import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.giksengik.weathersample.network.response.OneCallWeatherResponse
-import ru.giksengik.weathersample.network.wrapper.result.Result
 import rx.Observable
 
 

@@ -6,4 +6,7 @@
     <string name="open_drawer_text">Open navigation</string>
     <string name="close_drawer_text">Close navigation</string>
     <string name="add_weather">Add weather</string>
+    <string name="temperature_metric">Temperature metric</string>
+    <string name="wind_direction">Wind direction</string>
+    <string name="weather">Weather</string>
 </resources>
