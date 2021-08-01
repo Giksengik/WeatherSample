@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import retrofit2.HttpException
-import ru.giksengik.weathersample.models.WeatherData
-import ru.giksengik.weathersample.network.request.Coordinates
+import ru.giksengik.weathersample.network.request.LocationRequestData
 import ru.giksengik.weathersample.repositories.WeatherRepository
 import rx.schedulers.Schedulers
 import java.io.IOException
@@ -24,9 +21,9 @@ class WeatherListViewModelImpl @Inject constructor(private val weatherRepository
     fun getWeather(){
 
         weatherRepository.getWeather(listOf(
-            Coordinates(lat = 55.33,lon = 37.22),
-            Coordinates(lat = 51.30, lon = 0.07),
-            Coordinates(lat = -40.0, lon = 74.0)))
+            LocationRequestData(lat = 55.33,lon = 37.22, name = "Moscow", region =  "Russia"),
+            LocationRequestData(lat = 51.30, lon = 0.07, name = "London", region =  "England"),
+            LocationRequestData(lat = -40.0, lon = 74.0, name = "New York", region =  "USA")))
             .doOnNext{
                 _viewState.postValue(WeatherListViewState.Success.Loaded(it))
             }

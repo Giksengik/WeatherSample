@@ -57,8 +57,8 @@ class WeatherListAdapter : ListAdapter<WeatherData, WeatherListAdapter.ViewHolde
         }
 
         fun bind(weatherData: WeatherData){
-            binding?.region?.text = weatherData.timezone.split("/")[0]
-            binding?.district?.text = weatherData.timezone.split("/")[1]
+            binding?.region?.text = weatherData.name
+            binding?.district?.text = weatherData.region
             binding?.temperature?.text = ceil(weatherData.currentWeather.temp).toInt().toString()
             binding?.time?.text = weatherData.currentWeather.dt.getCurrentTime(weatherData.timezoneOffset)
             binding?.root?.context?.let { context ->

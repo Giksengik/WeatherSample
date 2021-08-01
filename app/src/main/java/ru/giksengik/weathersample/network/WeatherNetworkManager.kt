@@ -1,24 +1,34 @@
 package ru.giksengik.weathersample.network
 
 import ru.giksengik.weathersample.models.*
-import ru.giksengik.weathersample.network.request.Coordinates
+import ru.giksengik.weathersample.network.request.LocationRequestData
 import ru.giksengik.weathersample.network.response.OneCallWeatherResponse
 import rx.Observable
-import rx.functions.Func2
 import javax.inject.Inject
 
 class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJsonPlaceholder)
     : RemoteWeatherDataProvider {
 
-    override fun getWeather(listOfCoordinates: List<Coordinates>): Observable<List<WeatherData>> {
+    override fun getWeather(listOfCoordinates: List<LocationRequestData>): Observable<List<WeatherData>> {
         var list: Observable<List<OneCallWeatherResponse>> =
             api.getWeather(lat = listOfCoordinates[0].lat, lon = listOfCoordinates[0].lon)
-                .map { listOf(it) }
+                .map {
+                    val response = it
+                    response.name =  listOfCoordinates[0].name
+                    response.region =  listOfCoordinates[0].region
+                    listOf(response)
+                }
 
         for (i in 1 until listOfCoordinates.size) {
             list = Observable.zip(
                 list,
                 api.getWeather(lat = listOfCoordinates[i].lat, lon = listOfCoordinates[i].lon)
+                    .map{
+                        val response = it
+                        response.name =  listOfCoordinates[i].name
+                        response.region =  listOfCoordinates[i].region
+                        listOf(response)
+                    }
             ) { t1, t2 ->
                 t1 + t2
             }
@@ -30,6 +40,8 @@ class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJson
                     WeatherData(
                         lat = response.lat,
                         lon = response.lon,
+                        region = response.region,
+                        name = response.name,
                         timezone = response.timezone,
                         timezoneOffset = response.timezoneOffset,
                         currentWeather = CurrentWeather(

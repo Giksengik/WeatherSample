@@ -13,5 +13,7 @@ data class OneCallWeatherResponse(
     @SerialName("minutely") val minutely: List<MinutelyWeatherResponse> = listOf(),
     @SerialName("hourly") val hourly: List<CurrentWeatherResponse> = listOf(),
     @SerialName("daily") val daily: List<DailyWeatherResponse> = listOf(),
-    @SerialName("alerts") val alerts: List<WeatherAlertResponse> = listOf()
+    @SerialName("alerts") val alerts: List<WeatherAlertResponse> = listOf(),
+    var name : String = "",
+    var region : String = ""
 )
