@@ -123,4 +123,20 @@ class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJson
                 }
             }
     }
+
+    override fun getGeoQueryResults(query : String) : Observable<GeoQueryResults> =
+        api.getLocationsByQuery(query)
+            .map{ response ->
+                GeoQueryResults(
+                    locations = response.locations.map{ location ->
+                        LocationData(
+                            name = location.name,
+                            lat = location.lat,
+                            lon = location.lon,
+                            country = location.country
+                        )
+                    }
+                )
+            }
+
 }
