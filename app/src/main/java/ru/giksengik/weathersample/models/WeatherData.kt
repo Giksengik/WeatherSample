@@ -1,6 +1,10 @@
 package ru.giksengik.weathersample.models
 
+import androidx.room.Embedded
+import androidx.room.Entity
 
+
+@Entity( primaryKeys = ["lat", "lon"])
 data class WeatherData (
     val lat: Double,
     val lon: Double,

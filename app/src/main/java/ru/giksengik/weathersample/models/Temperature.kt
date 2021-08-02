@@ -1,6 +1,8 @@
 package ru.giksengik.weathersample.models
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Temperature(
     val day: Double,
     val min: Double,

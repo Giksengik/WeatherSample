@@ -1,6 +1,8 @@
 package ru.giksengik.weathersample.models
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class WeatherAlert (
     val senderName: String,
     val event: String,

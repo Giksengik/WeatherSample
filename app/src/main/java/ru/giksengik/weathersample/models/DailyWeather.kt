@@ -1,6 +1,8 @@
 package ru.giksengik.weathersample.models
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class DailyWeather (
     val dt: Long,
     val sunrise: Long,
