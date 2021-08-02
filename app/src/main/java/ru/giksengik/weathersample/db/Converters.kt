@@ -26,20 +26,29 @@ class Converters {
     fun fromJsonToCurrentWeather(string: String) : CurrentWeather =
         json.decodeFromString(string)
 
-    @TypeConverter
-    fun dailyWeatherToJson(dailyWeather: DailyWeather) : String =
-        json.encodeToString(dailyWeather)
 
     @TypeConverter
-    fun fromJsonToDailyWeather(string : String) : DailyWeather =
+    fun listOfCurrentWeatherToJson(listOfCurrentWeather: List<CurrentWeather>) : String =
+        json.encodeToString(listOfCurrentWeather)
+
+    @TypeConverter
+    fun fromJsonToListOfCurrentWeather(string: String) : List<CurrentWeather> =
         json.decodeFromString(string)
 
     @TypeConverter
-    fun fromWeatherAlertToJson(weatherAlert: WeatherAlert) : String =
-        json.encodeToString(weatherAlert)
+    fun listOfDailyWeatherToJson(listOfDailyWeather: List<DailyWeather>) : String =
+        json.encodeToString(listOfDailyWeather)
 
     @TypeConverter
-    fun fromJsonToWeatherAlert(string : String) : WeatherAlert =
+    fun fromJsonToListOfDailyWeather(string : String) : List<DailyWeather> =
+        json.decodeFromString(string)
+
+    @TypeConverter
+    fun fromListOfWeatherAlertToJson(listOfWeatherAlert: List<WeatherAlert>) : String =
+        json.encodeToString(listOfWeatherAlert)
+
+    @TypeConverter
+    fun fromJsonToListOfWeatherAlert(string : String) : List<WeatherAlert> =
         json.decodeFromString(string)
 
 }
