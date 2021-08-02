@@ -1,16 +1,16 @@
 package ru.giksengik.weathersample.network
 
+import io.reactivex.Single
 import ru.giksengik.weathersample.models.*
 import ru.giksengik.weathersample.network.request.LocationRequestData
 import ru.giksengik.weathersample.network.response.OneCallWeatherResponse
-import rx.Observable
 import javax.inject.Inject
 
 class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJsonPlaceholder)
     : RemoteWeatherDataProvider {
 
-    override fun getWeather(listOfCoordinates: List<LocationRequestData>): Observable<List<WeatherData>> {
-        var list: Observable<List<OneCallWeatherResponse>> =
+    override fun getWeather(listOfCoordinates: List<LocationRequestData>): Single<List<WeatherData>> {
+        var list: Single<List<OneCallWeatherResponse>> =
             api.getWeather(lat = listOfCoordinates[0].lat, lon = listOfCoordinates[0].lon)
                 .map {
                     val response = it
@@ -20,7 +20,7 @@ class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJson
                 }
 
         for (i in 1 until listOfCoordinates.size) {
-            list = Observable.zip(
+            list = Single.zip(
                 list,
                 api.getWeather(lat = listOfCoordinates[i].lat, lon = listOfCoordinates[i].lon)
                     .map{
@@ -136,7 +136,7 @@ class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJson
             }
     }
 
-    override fun getGeoQueryResults(query : String) : Observable<GeoQueryResults> =
+    override fun getGeoQueryResults(query : String) : Single<GeoQueryResults> =
         api.getLocationsByQuery(query)
             .map{ response ->
                 GeoQueryResults(

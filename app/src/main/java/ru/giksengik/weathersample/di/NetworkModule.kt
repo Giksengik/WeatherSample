@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import ru.giksengik.weathersample.network.WeatherApiJsonPlaceholder
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -55,7 +55,7 @@ object  NetworkModule {
         Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/")
             .client(httpClient)
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
 

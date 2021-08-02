@@ -1,11 +1,11 @@
 package ru.giksengik.weathersample.network
 
 
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.giksengik.weathersample.network.response.GeoQueryResponse
 import ru.giksengik.weathersample.network.response.OneCallWeatherResponse
-import rx.Observable
 
 
 interface WeatherApiJsonPlaceholder {
@@ -24,11 +24,11 @@ interface WeatherApiJsonPlaceholder {
                    @Query("exclude") exclude : String = ALL_EXCLUDE,
                    @Query("units") units : String = METRIC_UNITS,
                    @Query("lang") lang : String = ENGLISH_LANG
-    ) : Observable<OneCallWeatherResponse>
+    ) : Single<OneCallWeatherResponse>
 
     @GET("/geo/1.0/direct?")
     fun getLocationsByQuery(@Query("q") query : String,
                             @Query("limit") limit : Int = STANDART_LIMIT)
-    : Observable<GeoQueryResponse>
+    : Single<GeoQueryResponse>
 
 }

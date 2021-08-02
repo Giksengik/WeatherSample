@@ -1,17 +1,17 @@
 package ru.giksengik.weathersample.db
 
 import androidx.room.*
+import io.reactivex.Single
 import ru.giksengik.weathersample.models.WeatherData
-import rx.Observable
 
 
 @Dao
 interface WeatherDao {
 
     @Query("SELECT * FROM weatherdata")
-    fun getAll() : Observable<List<WeatherData>>
+    fun getAll() : Single<List<WeatherData>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(weatherData: WeatherData)
 
     @Delete
@@ -19,4 +19,7 @@ interface WeatherDao {
 
     @Update
     fun updateWeather(listOfWeatherData : List<WeatherData>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(weatherData: List<WeatherData>)
 }
