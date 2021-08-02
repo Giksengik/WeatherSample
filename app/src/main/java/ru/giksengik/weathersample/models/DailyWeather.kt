@@ -1,9 +1,5 @@
 package ru.giksengik.weathersample.models
 
-import kotlinx.serialization.SerialName
-import ru.giksengik.weathersample.network.response.FeelsLikeResponse
-import ru.giksengik.weathersample.network.response.TemperatureResponse
-import ru.giksengik.weathersample.network.response.WeatherResponse
 
 data class DailyWeather (
     val dt: Long,
