@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromJsonElement
 import ru.giksengik.weathersample.models.CurrentWeather
 import ru.giksengik.weathersample.models.DailyWeather
 import ru.giksengik.weathersample.models.WeatherAlert

@@ -1,9 +1,6 @@
 package ru.giksengik.weathersample.db
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import ru.giksengik.weathersample.models.WeatherData
 import rx.Observable
 
@@ -19,4 +16,7 @@ interface WeatherDao {
 
     @Delete
     fun delete(weatherData: WeatherData)
+
+    @Update
+    fun updateWeather(listOfWeatherData : List<WeatherData>)
 }

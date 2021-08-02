@@ -8,4 +8,9 @@ interface WeatherRepository {
 
     fun getWeather(listOfCoordinates: List<LocationRequestData>) : Observable<List<WeatherData>>
 
+    fun saveWeather(weatherData: WeatherData)
+
+    fun updateWeather(listOfWeatherData: List<WeatherData>)
+
+    fun getWeatherDataFromLocalDataSource() : Observable<List<WeatherData>>
 }
