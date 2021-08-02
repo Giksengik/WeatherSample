@@ -1,5 +1,7 @@
 package ru.giksengik.weathersample.db
 
-class RoomWeatherSource(dao : WeatherDataDao) : LocalDataSource {
+import javax.inject.Inject
+
+class RoomWeatherSource @Inject constructor(dao : WeatherDao) : LocalDataSource {
 
 }
