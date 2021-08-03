@@ -4,7 +4,9 @@ package ru.giksengik.weathersample.network
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
+import ru.giksengik.weathersample.models.LocationData
 import ru.giksengik.weathersample.network.response.GeoQueryResponse
+import ru.giksengik.weathersample.network.response.LocationResponse
 import ru.giksengik.weathersample.network.response.OneCallWeatherResponse
 
 
@@ -28,7 +30,7 @@ interface WeatherApiJsonPlaceholder {
 
     @GET("/geo/1.0/direct?")
     fun getLocationsByQuery(@Query("q") query : String,
-                            @Query("limit") limit : Int = STANDART_LIMIT)
-    : Single<GeoQueryResponse>
+                             @Query("limit") limit : Int = STANDART_LIMIT)
+    : Single<List<LocationResponse>>
 
 }

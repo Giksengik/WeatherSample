@@ -3,6 +3,7 @@ package ru.giksengik.weathersample.db
 import androidx.room.*
 import io.reactivex.Single
 import ru.giksengik.weathersample.models.WeatherData
+import ru.giksengik.weathersample.network.request.LocationRequestData
 
 
 @Dao
@@ -22,4 +23,8 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(weatherData: List<WeatherData>)
+
+    @Query("SELECT EXISTS(SELECT * FROM weatherdata WHERE lat = :lat AND lon = :lon)")
+    fun hasThisWeather(lat : Double, lon : Double) : Boolean
+
 }

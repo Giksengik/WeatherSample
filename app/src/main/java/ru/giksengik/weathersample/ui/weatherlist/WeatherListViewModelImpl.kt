@@ -19,12 +19,8 @@ class WeatherListViewModelImpl @Inject constructor(private val weatherRepository
     get() = _viewState
 
     fun getWeather(){
-
-        weatherRepository.getWeather(listOf(
-            LocationRequestData(lat = 55.33,lon = 37.22, name = "Moscow", region =  "Russia"),
-            LocationRequestData(lat = 51.30, lon = 0.07, name = "London", region =  "England"),
-            LocationRequestData(lat = -40.0, lon = 74.0, name = "New York", region =  "USA")))
-            .doOnSuccess{
+        weatherRepository.getAllWeather()
+            .doOnNext{
                 _viewState.postValue(WeatherListViewState.Success.Loaded(it))
             }
             .doOnError {

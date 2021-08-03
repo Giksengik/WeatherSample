@@ -13,4 +13,6 @@
     <string name="add_weather_place">Add weather place</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
+    <string name="network_error_message">Network error, please check your connection and try again</string>
+    <string name="http_error_message">Http error, please try again</string>
 </resources>

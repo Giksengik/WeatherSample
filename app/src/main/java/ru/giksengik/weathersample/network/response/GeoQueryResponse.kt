@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GeoQueryResponse (
-   val locations : List<LocationResponse>
+   val locations : List<LocationResponse> = listOf()
 )

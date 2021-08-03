@@ -136,11 +136,10 @@ class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJson
             }
     }
 
-    override fun getGeoQueryResults(query : String) : Single<GeoQueryResults> =
+    override fun getGeoQueryResults(query : String) : Single<List<LocationData>> =
         api.getLocationsByQuery(query)
-            .map{ response ->
-                GeoQueryResults(
-                    locations = response.locations.map{ location ->
+            .map{ locations ->
+                    locations.map{ location ->
                         LocationData(
                             name = location.name,
                             lat = location.lat,
@@ -148,7 +147,6 @@ class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJson
                             country = location.country
                         )
                     }
-                )
             }
 
 }
