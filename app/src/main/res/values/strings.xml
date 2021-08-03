@@ -9,4 +9,8 @@
     <string name="temperature_metric">Temperature metric</string>
     <string name="wind_direction">Wind direction</string>
     <string name="weather">Weather</string>
+    <string name="place">Place</string>
+    <string name="add_weather_place">Add weather place</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
 </resources>

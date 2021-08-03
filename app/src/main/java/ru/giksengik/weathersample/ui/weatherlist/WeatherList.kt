@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import ru.giksengik.weathersample.databinding.FragmentWeatherListBinding
+import ru.giksengik.weathersample.ui.weatheradd.AddWeatherDialogFragment
 
 
 @AndroidEntryPoint
@@ -35,9 +36,14 @@ class WeatherList : Fragment() {
 
 
         listAdapter = WeatherListAdapter()
+
         binding?.weatherList?.apply{
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
+        }
+
+        binding?.addWeatherButton?.setOnClickListener{
+            openAddWeatherPlaceDialog()
         }
 
         viewModel.viewState.observe(viewLifecycleOwner){
@@ -46,6 +52,12 @@ class WeatherList : Fragment() {
 
 
         viewModel.getWeather()
+    }
+
+    private fun openAddWeatherPlaceDialog() {
+        AddWeatherDialogFragment().show(
+                childFragmentManager, "ADD_PLACE"
+        )
     }
 
     private fun handleState(viewState : WeatherListViewState) =
