@@ -1,5 +1,6 @@
 package ru.giksengik.weathersample.db
 
+import io.reactivex.Flowable
 import io.reactivex.Single
 import ru.giksengik.weathersample.models.LocationData
 import ru.giksengik.weathersample.models.WeatherData
@@ -10,19 +11,19 @@ class RoomWeatherSource @Inject constructor(private val dao : WeatherDao) : Loca
 
     override fun saveWeatherData(weatherData: WeatherData) = dao.insert(weatherData)
 
-    override fun getAllWeatherData(): Single<List<WeatherData>> = dao.getAll()
+    override fun getAllWeatherData(): Flowable<List<WeatherData>> = dao.getAll()
 
     override fun getAllWeatherLocations(): Single<List<LocationData>> =
         dao.getAll()
-            .map{ weather ->
+                .firstOrError()
+                .map{ weather ->
                 weather.map{ data ->
                     LocationData(
                         name = data.name,
                         lon = data.lon,
                         lat = data.lat,
                         country = data.region
-                    )
-                }
+                    ) }
             }
 
     override fun deleteWeatherData(weatherData: WeatherData) = dao.delete(weatherData)

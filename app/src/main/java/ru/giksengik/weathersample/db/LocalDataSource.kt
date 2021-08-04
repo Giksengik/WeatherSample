@@ -1,5 +1,6 @@
 package ru.giksengik.weathersample.db
 
+import io.reactivex.Flowable
 import io.reactivex.Single
 import ru.giksengik.weathersample.models.LocationData
 import ru.giksengik.weathersample.models.WeatherData
@@ -9,7 +10,7 @@ interface LocalDataSource {
 
     fun saveWeatherData(weatherData: WeatherData)
 
-    fun getAllWeatherData() : Single<List<WeatherData>>
+    fun getAllWeatherData() : Flowable<List<WeatherData>>
 
     fun getAllWeatherLocations() : Single<List<LocationData>>
 

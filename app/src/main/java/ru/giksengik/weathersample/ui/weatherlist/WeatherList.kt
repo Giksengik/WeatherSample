@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import ru.giksengik.weathersample.NetworkUser
 import ru.giksengik.weathersample.databinding.FragmentWeatherListBinding
@@ -52,8 +51,7 @@ class WeatherList : Fragment() {
             handleState(it)
         }
 
-
-        viewModel.getWeather()
+        viewModel.loadWeather()
     }
 
     private fun openAddWeatherPlaceDialog() {

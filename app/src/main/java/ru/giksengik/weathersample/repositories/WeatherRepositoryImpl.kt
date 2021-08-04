@@ -1,6 +1,7 @@
 package ru.giksengik.weathersample.repositories
 
 
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
@@ -12,6 +13,7 @@ import ru.giksengik.weathersample.models.WeatherData
 import ru.giksengik.weathersample.network.RemoteWeatherDataProvider
 import ru.giksengik.weathersample.network.request.LocationRequestData
 import ru.giksengik.weathersample.ui.weatheradd.AddWeatherViewState
+import ru.giksengik.weathersample.ui.weatherlist.WeatherListViewState
 import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
@@ -19,19 +21,8 @@ class WeatherRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource)
     : WeatherRepository{
 
-    override fun getAllWeather(): Observable<List<WeatherData>> =
+    override fun loadAllWeather(): Observable<WeatherListViewState> =
         Observable.create { emitter ->
-            localDataSource.getAllWeatherData()
-                .observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .doOnSuccess{
-                    emitter.onNext(it)
-                }
-                .doOnError{
-                    emitter.onError(it)
-                }
-                .subscribe()
-
             localDataSource.getAllWeatherLocations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -49,7 +40,6 @@ class WeatherRepositoryImpl @Inject constructor(
                         .subscribeOn(Schedulers.io())
                         .doOnSuccess{ weatherData ->
                             updateWeather(weatherData)
-                            emitter.onNext(weatherData)
                         }
                         .doOnError{ throwable ->
                             emitter.onError(throwable)
@@ -62,6 +52,10 @@ class WeatherRepositoryImpl @Inject constructor(
                 .subscribe()
 
         }
+
+    override fun getAllWeather(): Flowable<List<WeatherData>> =
+            localDataSource.getAllWeatherData()
+
 
     override fun addWeatherLocation(locationData: LocationData): Single<AddWeatherViewState> =
         Single.create { emitter : SingleEmitter<AddWeatherViewState> ->
@@ -104,8 +98,6 @@ class WeatherRepositoryImpl @Inject constructor(
     private fun updateWeather(listOfWeatherData: List<WeatherData>) =
         localDataSource.updateWeatherData(listOfWeatherData)
 
-    private fun getWeatherDataFromLocalDataSource(): Single<List<WeatherData>> =
-            localDataSource.getAllWeatherData()
 
     private fun isWeatherLocationWritten(locationRequestData: LocationRequestData) : Boolean =
             localDataSource.hasThisWeatherLocation(locationRequestData)

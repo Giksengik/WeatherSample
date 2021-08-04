@@ -1,16 +1,15 @@
 package ru.giksengik.weathersample.db
 
 import androidx.room.*
-import io.reactivex.Single
+import io.reactivex.Flowable
 import ru.giksengik.weathersample.models.WeatherData
-import ru.giksengik.weathersample.network.request.LocationRequestData
 
 
 @Dao
 interface WeatherDao {
 
     @Query("SELECT * FROM weatherdata")
-    fun getAll() : Single<List<WeatherData>>
+    fun getAll() : Flowable<List<WeatherData>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(weatherData: WeatherData)

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.schedulers.Schedulers
-import ru.giksengik.weathersample.network.request.LocationRequestData
 import ru.giksengik.weathersample.repositories.WeatherRepository
 import java.io.IOException
 import javax.inject.Inject
@@ -18,11 +17,24 @@ class WeatherListViewModelImpl @Inject constructor(private val weatherRepository
     val viewState : LiveData<WeatherListViewState>
     get() = _viewState
 
-    fun getWeather(){
+    init{
+        getWeather()
+    }
+
+
+    private fun getWeather(){
         weatherRepository.getAllWeather()
-            .doOnNext{
-                _viewState.postValue(WeatherListViewState.Success.Loaded(it))
-            }
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnNext{
+                    _viewState.postValue(WeatherListViewState.Success.Loaded(it))
+                }
+                .subscribe()
+    }
+
+
+    fun loadWeather(){
+        weatherRepository.loadAllWeather()
             .doOnError {
                 it.printStackTrace()
                 when(it){
@@ -33,6 +45,7 @@ class WeatherListViewModelImpl @Inject constructor(private val weatherRepository
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .subscribe()
-
     }
+
+
 }
