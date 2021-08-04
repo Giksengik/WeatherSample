@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import ru.giksengik.weathersample.models.WeatherData
 import ru.giksengik.weathersample.repositories.WeatherRepository
 import java.io.IOException
 import javax.inject.Inject
@@ -23,6 +25,7 @@ class WeatherListViewModelImpl @Inject constructor(private val weatherRepository
 
 
     private fun getWeather(){
+        _viewState.value = WeatherListViewState.Loading
         weatherRepository.getAllWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -45,6 +48,15 @@ class WeatherListViewModelImpl @Inject constructor(private val weatherRepository
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .subscribe()
+    }
+
+    fun deleteWeather(weatherData: WeatherData){
+        Single.create<Nothing> {
+            weatherRepository.deleteWeather(weatherData)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe()
     }
 
 

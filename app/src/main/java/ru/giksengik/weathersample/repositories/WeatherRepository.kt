@@ -22,5 +22,5 @@ interface WeatherRepository {
 
     fun addWeatherLocation(locationData: LocationData) : Single<AddWeatherViewState>
 
-
+    fun deleteWeather(weatherData: WeatherData)
 }

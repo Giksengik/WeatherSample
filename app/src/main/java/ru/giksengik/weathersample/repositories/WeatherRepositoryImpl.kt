@@ -81,6 +81,10 @@ class WeatherRepositoryImpl @Inject constructor(
             else emitter.onSuccess(AddWeatherViewState.Error.PlaceAlreadyWritten)
         }
 
+    override fun deleteWeather(weatherData: WeatherData) {
+        localDataSource.deleteWeatherData(weatherData)
+    }
+
 
     override fun getWeather(locationRequestData: LocationRequestData) : Single<WeatherData> =
         remoteWeatherDataProvider.getWeather(listOf(locationRequestData))

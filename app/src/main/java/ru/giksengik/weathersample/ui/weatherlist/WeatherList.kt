@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import ru.giksengik.weathersample.NetworkUser
@@ -38,7 +39,10 @@ class WeatherList : Fragment() {
 
         listAdapter = WeatherListAdapter()
 
+        val onTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(context,viewModel,listAdapter))
+
         binding?.weatherList?.apply{
+            onTouchHelper.attachToRecyclerView(this)
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
         }
@@ -69,7 +73,6 @@ class WeatherList : Fragment() {
             is WeatherListViewState.Loading -> setLoading()
             is WeatherListViewState.Error.HttpError -> onHttpError()
             is WeatherListViewState.Error.NetworkError -> onNetworkError()
-
         }
 
     private fun setLoading() {
