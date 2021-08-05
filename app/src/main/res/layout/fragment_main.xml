@@ -17,7 +17,9 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Theme.WeatherSample" />
+            android:theme="@style/Theme.WeatherSample"
+            app:subtitleTextColor="@color/white"
+            app:titleTextColor="@color/white" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainNavHost"
@@ -31,6 +33,7 @@
     <com.google.android.material.navigation.NavigationView
         app:headerLayout="@layout/navigation_drawer_header"
         android:id="@+id/navigationView"
+        app:itemIconTint="@color/white"
         android:layout_gravity="start"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

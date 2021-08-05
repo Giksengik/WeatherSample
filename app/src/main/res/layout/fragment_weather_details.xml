@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/blue">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/startGuideline"
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="London,"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="UK"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toBottomOf="@+id/placeName" />
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Sat, 6 aug"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toBottomOf="@+id/placeRegion" />
@@ -63,9 +64,9 @@
         android:id="@+id/weatherDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="80dp"
         android:text="Today"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
@@ -86,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="30°"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/dayWeatherIcon"
         app:layout_constraintStart_toStartOf="@+id/centerGuideline"
@@ -106,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Sunny"
-        android:textColor="@color/grey"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,38 +117,45 @@
         android:id="@+id/weatherPeriods"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        app:flow_horizontalBias="0"
-        app:flow_wrapMode="chain"
-        app:flow_horizontalStyle="packed"
-        app:flow_horizontalGap="20dp"
+        android:layout_marginTop="80dp"
         app:constraint_referenced_ids="textToday,textTomorrow,textNext7Days"
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="20dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_wrapMode="chain"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toBottomOf="@id/weatherDescription" />
 
     <TextView
-        style = "@style/weatherPeriodStyle"
         android:id="@+id/textToday"
+        style="@style/weatherPeriodStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/today"
-         />
+        android:textColor="@color/light_grey"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="464dp" />
 
     <TextView
-        style = "@style/weatherPeriodStyle"
         android:id="@+id/textTomorrow"
+        style="@style/weatherPeriodStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tomorrow" />
+        android:text="@string/tomorrow"
+        android:textColor="@color/light_grey"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="434dp" />
 
     <TextView
-        style = "@style/weatherPeriodStyle"
         android:id="@+id/textNext7Days"
+        style="@style/weatherPeriodStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next_7_days"
-        />
+        android:textColor="@color/light_grey"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="434dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/weatherChangeList"

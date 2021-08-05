@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
     android:background="@color/white"
+    app:cardBackgroundColor="@color/dark_blue"
     app:cardCornerRadius="32dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +22,7 @@
             android:layout_marginEnd="8dp"
             android:gravity="center_horizontal"
             android:text="9AM"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +45,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:text="16°"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/hourOfWeather"

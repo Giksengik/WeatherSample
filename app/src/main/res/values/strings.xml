@@ -19,4 +19,5 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="today">Today</string>
     <string name="weather_details">Weather Details</string>
+    <string name="weather_sample">Weather Sample</string>
 </resources>

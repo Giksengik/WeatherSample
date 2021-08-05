@@ -27,24 +27,27 @@ class WeatherRepositoryImpl @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnSuccess{ locations ->
-                    remoteWeatherDataProvider
-                        .getWeather(locations.map {  location ->
-                            LocationRequestData(
-                                lon = location.lon,
-                                lat = location.lat,
-                                name = location.name,
-                                region = location.country
-                            )
-                        })
-                        .observeOn(Schedulers.io())
-                        .subscribeOn(Schedulers.io())
-                        .doOnSuccess{ weatherData ->
-                            updateWeather(weatherData)
-                        }
-                        .doOnError{ throwable ->
-                            emitter.onError(throwable)
-                        }
-                        .subscribe()
+                    if(locations.isNotEmpty()) {
+                        remoteWeatherDataProvider
+                                .getWeather(locations.map { location ->
+                                    LocationRequestData(
+                                            lon = location.lon,
+                                            lat = location.lat,
+                                            name = location.name,
+                                            region = location.country
+                                    )
+                                })
+                                .observeOn(Schedulers.io())
+                                .subscribeOn(Schedulers.io())
+                                .doOnSuccess { weatherData ->
+                                    updateWeather(weatherData)
+                                }
+                                .doOnError { throwable ->
+                                    emitter.onError(throwable)
+                                }
+                                .subscribe()
+                    }
+                    emitter.onNext(WeatherListViewState.Success.Loaded(listOf()))
                 }
                 .doOnError{
                     emitter.onError(it)
