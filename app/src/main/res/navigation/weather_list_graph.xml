@@ -9,5 +9,21 @@
         android:id="@+id/weatherList"
         android:name="ru.giksengik.weathersample.ui.weatherlist.WeatherList"
         android:label="@string/title_weather_list"
-        tools:layout="@layout/fragment_weather_list" />
+        tools:layout="@layout/fragment_weather_list" >
+        <action
+            android:id="@+id/action_weatherList_to_weatherDetailsFragment"
+            app:destination="@id/weatherDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weatherDetailsFragment"
+        android:name="ru.giksengik.weathersample.ui.weatherdetails.WeatherDetailsFragment"
+        android:label="@string/weather_details" >
+
+        <argument
+            android:name="weatherData"
+            app:argType="ru.giksengik.weathersample.models.WeatherData" />
+        <action
+            android:id="@+id/action_weatherDetailsFragment_to_weatherList"
+            app:destination="@id/weatherList" />
+    </fragment>
 </navigation>

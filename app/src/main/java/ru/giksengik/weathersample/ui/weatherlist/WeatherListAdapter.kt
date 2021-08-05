@@ -20,9 +20,14 @@ import ru.giksengik.weathersample.models.WeatherData
 import kotlin.math.ceil
 
 
-class WeatherListAdapter : ListAdapter<WeatherData, WeatherListAdapter.ViewHolder>(
+class WeatherListAdapter(private val clickListener : OnWeatherClickListener) : ListAdapter<WeatherData, WeatherListAdapter.ViewHolder>(
     WeatherDataDiffUtil()
 ) {
+
+    interface OnWeatherClickListener{
+        fun onClick(weatherData: WeatherData)
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -34,7 +39,7 @@ class WeatherListAdapter : ListAdapter<WeatherData, WeatherListAdapter.ViewHolde
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int){
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
 
@@ -56,7 +61,7 @@ class WeatherListAdapter : ListAdapter<WeatherData, WeatherListAdapter.ViewHolde
             binding = WeatherItemInListBinding.bind(itemView)
         }
 
-        fun bind(weatherData: WeatherData){
+        fun bind(weatherData: WeatherData, clickListener: OnWeatherClickListener){
             binding?.region?.text = weatherData.name
             binding?.district?.text = weatherData.region
             binding?.temperature?.text = ceil(weatherData.currentWeather.temp).toInt().toString()
@@ -66,6 +71,9 @@ class WeatherListAdapter : ListAdapter<WeatherData, WeatherListAdapter.ViewHolde
             }
             val url = weatherData.currentWeather.weather[0].iconUrl.getWeatherImageUrl()
             binding?.weatherIcon?.load(url)
+            itemView.setOnClickListener{
+                clickListener.onClick(weatherData)
+            }
 
         }
 

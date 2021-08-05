@@ -1,10 +1,11 @@
 package ru.giksengik.weathersample.models
 
-import androidx.room.Embedded
+import android.os.Parcelable
 import androidx.room.Entity
-
+import kotlinx.parcelize.Parcelize
 
 @Entity( primaryKeys = ["lat", "lon"])
+@Parcelize
 data class WeatherData (
     val lat: Double,
     val lon: Double,
@@ -16,4 +17,4 @@ data class WeatherData (
     val hourlyWeather : List<CurrentWeather>,
     val dailyWeather: List<DailyWeather>,
     val weatherAlerts : List<WeatherAlert>
-    )
+    ) : Parcelable

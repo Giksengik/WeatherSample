@@ -7,16 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import ru.giksengik.weathersample.NavHolder
 import ru.giksengik.weathersample.NetworkUser
 import ru.giksengik.weathersample.databinding.FragmentWeatherListBinding
+import ru.giksengik.weathersample.models.WeatherData
+import ru.giksengik.weathersample.ui.NavigationButtonFragmentUser
+import ru.giksengik.weathersample.ui.ToolbarHolder
 import ru.giksengik.weathersample.ui.weatheradd.AddWeatherDialogFragment
 
 
 @AndroidEntryPoint
-class WeatherList : Fragment() {
+class WeatherList : NavigationButtonFragmentUser() {
 
 
     private val viewModel by viewModels<WeatherListViewModelImpl>()
@@ -36,8 +41,14 @@ class WeatherList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupNavigationButton()
 
-        listAdapter = WeatherListAdapter()
+        listAdapter = WeatherListAdapter(object : WeatherListAdapter.OnWeatherClickListener{
+            override fun onClick(weatherData: WeatherData) {
+                navigateToWeatherDetails(weatherData)
+            }
+        }
+        )
 
         val onTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(context,viewModel,listAdapter))
 
@@ -57,6 +68,19 @@ class WeatherList : Fragment() {
 
         viewModel.loadWeather()
     }
+
+    override fun setupNavigationButton(){
+        activity?.let{ activity ->
+            ((activity as NavHolder).getNavPlaceholder() as ToolbarHolder)
+                .configureNavigationButtonToShowDrawer()
+        }
+    }
+
+    private fun navigateToWeatherDetails(weatherData: WeatherData) {
+        val action = WeatherListDirections.actionWeatherListToWeatherDetailsFragment(weatherData)
+        findNavController().navigate(action)
+    }
+
 
     private fun openAddWeatherPlaceDialog() {
         AddWeatherDialogFragment().show(

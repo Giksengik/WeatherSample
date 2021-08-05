@@ -1,8 +1,11 @@
 package ru.giksengik.weathersample.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class DailyWeather (
     val dt: Long,
     val sunrise: Long,
@@ -16,4 +19,4 @@ data class DailyWeather (
     val weather: List<Weather>,
     val clouds: Long,
     val rain: Double,
-)
+) : Parcelable

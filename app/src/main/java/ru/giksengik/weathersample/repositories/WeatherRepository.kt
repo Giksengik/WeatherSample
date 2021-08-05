@@ -3,7 +3,6 @@ package ru.giksengik.weathersample.repositories
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
-import ru.giksengik.weathersample.models.GeoQueryResults
 import ru.giksengik.weathersample.models.LocationData
 import ru.giksengik.weathersample.models.WeatherData
 import ru.giksengik.weathersample.network.request.LocationRequestData

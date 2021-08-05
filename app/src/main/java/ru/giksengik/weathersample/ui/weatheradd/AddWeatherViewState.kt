@@ -1,8 +1,6 @@
 package ru.giksengik.weathersample.ui.weatheradd
 
-import ru.giksengik.weathersample.models.GeoQueryResults
 import ru.giksengik.weathersample.models.LocationData
-import ru.giksengik.weathersample.models.WeatherData
 
 sealed class AddWeatherViewState{
 
