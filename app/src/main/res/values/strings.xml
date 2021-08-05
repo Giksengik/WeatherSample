@@ -15,4 +15,7 @@
     <string name="cancel">CANCEL</string>
     <string name="network_error_message">Network error, please check your connection and try again</string>
     <string name="http_error_message">Http error, please try again</string>
+    <string name="next_7_days">Next 7 days →</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="today">Today</string>
 </resources>
