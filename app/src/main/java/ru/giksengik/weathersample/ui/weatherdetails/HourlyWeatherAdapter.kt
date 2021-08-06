@@ -47,7 +47,7 @@ class HourlyWeatherAdapter(val timezoneOffset : Long)
         @SuppressLint("SetTextI18n")
         fun bind(hourWeather: CurrentWeather, timezoneOffset: Long){
             binding?.hourOfWeather?.text =
-                    hourWeather.dt.getCurrentTime(hourWeather.dt - timezoneOffset)
+                    hourWeather.dt.getCurrentTime(timezoneOffset)
             binding?.iconOfHourWeather?.load(hourWeather.weather[0].iconUrl.getWeatherImageUrl())
             binding?.tempOfHourWeather?.text = "${ceil(hourWeather.temp).toInt()}${getTempSymbol()}"
         }

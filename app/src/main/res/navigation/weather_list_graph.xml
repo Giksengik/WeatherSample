@@ -25,5 +25,19 @@
         <action
             android:id="@+id/action_weatherDetailsFragment_to_weatherList"
             app:destination="@id/weatherList" />
+        <action
+            android:id="@+id/action_weatherDetailsFragment_to_nextWeekWeatherFragment"
+            app:destination="@id/nextWeekWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nextWeekWeatherFragment"
+        android:name="ru.giksengik.weathersample.ui.weatherdetails.NextWeekWeatherFragment"
+        android:label="Weather" >
+        <argument
+            android:name="weatherData"
+            app:argType="ru.giksengik.weathersample.models.WeatherData" />
+        <action
+            android:id="@+id/action_nextWeekWeatherFragment_to_weatherDetailsFragment"
+            app:destination="@id/weatherDetailsFragment" />
     </fragment>
 </navigation>

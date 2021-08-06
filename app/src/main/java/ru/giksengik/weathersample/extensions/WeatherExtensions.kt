@@ -17,10 +17,18 @@ fun Long.toTimeString() = SimpleDateFormat("HH:mm").format(Date(this))
 fun Long.getCurrentTime(timeShift: Long) : String =
     ((this + timeShift) * 1000).toTimeString()
 
-fun WeatherData.getWeatherAtDay(day : String) : List<CurrentWeather>{
+fun Long.getWeekDay(timeShift: Long) : String {
+    val date = Date((this + timeShift) * 1000)
+    val format = SimpleDateFormat("EEEE")
+    return format.format(date)
+}
+
+
+fun WeatherData.getWeatherAtDay(day: String) : List<CurrentWeather>{
     val list = mutableListOf<CurrentWeather>()
     for(item in this.hourlyWeather){
-        if(item.dt.getDay(this.timezoneOffset) == day)
+        val tempDay = item.dt.getDay(this.timezoneOffset)
+        if(tempDay == day)
             list.add(item)
         else if (list.size != 0)
             break
@@ -29,13 +37,13 @@ fun WeatherData.getWeatherAtDay(day : String) : List<CurrentWeather>{
 }
 
 fun Long.getDate(timeShift: Long) : String {
-    val date = Date((this - timeShift) * 1000)
+    val date = Date((this + timeShift) * 1000)
     val format = SimpleDateFormat("dd MMM")
     return format.format(date)
 }
 
 fun Long.getDay(timeShift: Long) : String{
-    val date = Date((this - timeShift) * 1000)
+    val date = Date((this + timeShift) * 1000)
     val format = SimpleDateFormat("dd")
     return format.format(date)
 }
@@ -74,7 +82,7 @@ private fun setRotatedBitmap(iconId: Int, context: Context, angle: Float, image:
     image.rotation = angle
 }
 
-fun TextView.setColorWithResources(context: Context?, color : Int){
+fun TextView.setColorWithResources(context: Context?, color: Int){
     this.setTextColor(ResourcesCompat.getColor(resources, color, context?.theme))
 }
 

@@ -46,6 +46,16 @@ class WeatherDetailsFragment : NavigationButtonFragmentUser() {
         binding?.textToday?.setOnClickListener{
             setupToday(weatherData)
         }
+
+        binding?.textNext7Days?.setOnClickListener{
+            navigateToNextWeatherFragment()
+        }
+    }
+
+    private fun navigateToNextWeatherFragment() {
+        findNavController().navigate(
+                WeatherDetailsFragmentDirections.actionWeatherDetailsFragmentToNextWeekWeatherFragment(args.weatherData)
+        )
     }
 
     @SuppressLint("SetTextI18n")
@@ -86,7 +96,7 @@ class WeatherDetailsFragment : NavigationButtonFragmentUser() {
         binding?.weatherDescription?.text = weatherData.dailyWeather[1].weather[0].main
         binding?.dayWeatherIcon?.load(weatherData.dailyWeather[1].weather[0].iconUrl.getWeatherImageUrl())
         binding?.dayWeatherTemp?.text = "${kotlin.math.ceil(weatherData.dailyWeather[1].temp.day).toInt()}${getTempSymbol()}"
-        binding?.weatherDate?.text = weatherData.currentWeather.dt.getDate(weatherData.dailyWeather[1].dt)
+        binding?.weatherDate?.text = weatherData.dailyWeather[1].dt.getDate(weatherData.timezoneOffset)
         adapter?.submitList(weatherData.
         getWeatherAtDay(weatherData.getTomorrow()))
     }
@@ -96,8 +106,6 @@ class WeatherDetailsFragment : NavigationButtonFragmentUser() {
             ((activity as NavHolder).getNavPlaceholder() as ToolbarHolder)
                     .configureNavigationButtonToAction(WeatherDetailsFragmentDirections.actionWeatherDetailsFragmentToWeatherList())
         }
-        findNavController()
-
     }
 
     override fun onDetach() {
