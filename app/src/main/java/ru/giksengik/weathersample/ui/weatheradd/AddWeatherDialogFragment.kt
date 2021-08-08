@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.giksengik.weathersample.R
 import ru.giksengik.weathersample.databinding.FragmentAddWeatherBinding
+import ru.giksengik.weathersample.extensions.exhaustive
 import ru.giksengik.weathersample.models.LocationData
 import java.util.concurrent.TimeUnit
 
@@ -64,11 +65,17 @@ class AddWeatherDialogFragment : DialogFragment() {
         binding?.buttonOk?.setOnClickListener{
             if(currentGeoQueryResults != null && currentGeoQueryResults!!.isNotEmpty())
                 viewModel.addWeatherLocation(currentGeoQueryResults!![0])
+            else
+                onIncorrectInput()
         }
 
         viewModel.viewState.observe(viewLifecycleOwner){ viewState ->
             handleState(viewState)
         }
+    }
+
+    private fun onIncorrectInput() {
+        binding?.weatherPlaceBlock?.helperText = getString(R.string.incorrent_input)
     }
 
     private fun onTextChange() {
@@ -87,7 +94,7 @@ class AddWeatherDialogFragment : DialogFragment() {
             is AddWeatherViewState.WeatherPlaceAdded -> onWeatherPlaceAdded()
             is AddWeatherViewState.Error.NetworkError -> onNetworkError()
             is AddWeatherViewState.Error.HttpError -> onHttpError()
-            else -> onLoading()
+            else  -> onPlaceAlreadyWritten()
         }
 
     private fun onLoading() {
@@ -111,6 +118,12 @@ class AddWeatherDialogFragment : DialogFragment() {
 
     private fun onWeatherPlaceAdded()  {
         dismiss()
+    }
+
+    private fun onPlaceAlreadyWritten(){
+        onLoaded()
+        binding?.weatherPlaceBlock?.helperText = getString(R.string.place_already_written_error_text)
+
     }
 
     private fun onHttpError()  {

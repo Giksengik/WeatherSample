@@ -21,4 +21,6 @@
     <string name="weather_details">Weather Details</string>
     <string name="weather_sample">Weather Sample</string>
     <string name="next_7_days_text">Next 7 days</string>
+    <string name="incorrent_input">Incorrect input</string>
+    <string name="place_already_written_error_text">This place already written</string>
 </resources>

@@ -26,6 +26,7 @@
         android:hint="@string/place"
         app:endIconMode="clear_text"
         app:helperTextEnabled="true"
+        app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
         app:layout_constraintTop_toBottomOf="@+id/dialogTitle">

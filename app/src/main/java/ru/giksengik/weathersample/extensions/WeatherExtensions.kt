@@ -86,3 +86,6 @@ fun TextView.setColorWithResources(context: Context?, color: Int){
     this.setTextColor(ResourcesCompat.getColor(resources, color, context?.theme))
 }
 
+val <T> T.exhaustive: T
+    get() = this
+
