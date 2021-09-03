@@ -88,8 +88,8 @@ class WeatherList : NavigationButtonFragmentUser() {
         )
     }
 
-    private fun handleState(viewState : WeatherListViewState) =
-        when(viewState){
+    private fun handleState(viewState : WeatherListViewState) {
+        when (viewState) {
             is WeatherListViewState.Success.Loaded -> {
                 setLoaded()
                 listAdapter?.submitList(viewState.weatherList)
@@ -98,6 +98,7 @@ class WeatherList : NavigationButtonFragmentUser() {
             is WeatherListViewState.Error.HttpError -> onHttpError()
             is WeatherListViewState.Error.NetworkError -> onNetworkError()
         }
+    }
 
     private fun setLoading() {
         binding?.weatherListProgressBar?.visibility = View.VISIBLE
@@ -123,6 +124,7 @@ class WeatherList : NavigationButtonFragmentUser() {
         super.onDestroy()
         listAdapter = null
         binding = null
+        viewModel.clear()
     }
 
 }

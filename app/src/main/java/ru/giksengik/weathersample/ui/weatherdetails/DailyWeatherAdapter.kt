@@ -16,11 +16,8 @@ import ru.giksengik.weathersample.extensions.getWeekDay
 import ru.giksengik.weathersample.models.DailyWeather
 import kotlin.math.ceil
 
-class DailyWeatherAdapter (val timezoneShift: Long) :
+class DailyWeatherAdapter (private val timezoneShift: Long) :
     ListAdapter<DailyWeather, DailyWeatherAdapter.ViewHolder>(DailyWeatherDiffUtil()){
-
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
             ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.day_weather_item, parent, false))

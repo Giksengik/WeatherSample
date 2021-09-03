@@ -1,100 +1,62 @@
 package ru.giksengik.weathersample.repositories
 
 
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.SingleEmitter
+import io.reactivex.*
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
 import ru.giksengik.weathersample.db.LocalDataSource
 import ru.giksengik.weathersample.models.LocationData
 import ru.giksengik.weathersample.models.WeatherData
 import ru.giksengik.weathersample.network.RemoteWeatherDataProvider
-import ru.giksengik.weathersample.network.request.LocationRequestData
-import ru.giksengik.weathersample.ui.weatheradd.AddWeatherViewState
-import ru.giksengik.weathersample.ui.weatherlist.WeatherListViewState
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
     private val remoteWeatherDataProvider: RemoteWeatherDataProvider,
-    private val localDataSource: LocalDataSource)
-    : WeatherRepository{
+    private val localDataSource: LocalDataSource
+) : WeatherRepository {
 
-    override fun loadAllWeather(): Observable<WeatherListViewState> =
-        Observable.create { emitter ->
-            localDataSource.getAllWeatherLocations()
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .doOnSuccess{ locations ->
-                    if(locations.isNotEmpty()) {
-                        remoteWeatherDataProvider
-                                .getWeather(locations.map { location ->
-                                    LocationRequestData(
-                                            lon = location.lon,
-                                            lat = location.lat,
-                                            name = location.name,
-                                            region = location.country
-                                    )
-                                })
-                                .observeOn(Schedulers.io())
-                                .subscribeOn(Schedulers.io())
-                                .doOnSuccess { weatherData ->
-                                    updateWeather(weatherData)
-                                }
-                                .doOnError { throwable ->
-                                    emitter.onError(throwable)
-                                }
-                                .subscribe()
-                    }
-                    emitter.onNext(WeatherListViewState.Success.Loaded(listOf()))
-                }
-                .doOnError{
-                    emitter.onError(it)
-                }
-                .subscribe()
+    private fun getAllWeatherLocations() =
+        localDataSource.getAllWeatherLocations()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
 
-        }
+    override fun loadAllWeather(): Single<List<WeatherData>> =
+        getAllWeatherLocations()
+            .flatMap { locations ->
+                getAllWeatherByLocations(locations)
+            }
+            .doOnSuccess { weatherData ->
+                saveAllWeather(weatherData)
+            }
+
+
+    private fun getAllWeatherByLocations(locations: List<LocationData>) =
+        remoteWeatherDataProvider.getWeather(locations)
 
     override fun getAllWeather(): Flowable<List<WeatherData>> =
-            localDataSource.getAllWeatherData()
+        localDataSource.getAllWeatherData()
 
-
-    override fun addWeatherLocation(locationData: LocationData): Single<AddWeatherViewState> =
-        Single.create { emitter : SingleEmitter<AddWeatherViewState> ->
-            val request = LocationRequestData(
-                lon = locationData.lon,
-                lat = locationData.lat,
-                name = locationData.name,
-                region = locationData.country
-            )
-            if(!isWeatherLocationWritten(locationRequestData = request)){
-                getWeather(request)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .doOnSuccess{ data ->
-                        saveWeather(weatherData = data)
-                        emitter.onSuccess(AddWeatherViewState.WeatherPlaceAdded)
-                    }
-                    .doOnError{
-                        emitter.onError(it)
-                    }
-                    .subscribe()
+    override fun addWeatherLocation(locationData: LocationData): Single<WeatherData> =
+        isWeatherLocationWritten(locationData)
+            .flatMap { isWritten ->
+                if(isWritten)
+                    Single.error(IllegalArgumentException("This location is already exist"))
+                else
+                    getWeather(locationData)
             }
-            else emitter.onSuccess(AddWeatherViewState.Error.PlaceAlreadyWritten)
-        }
-
-    override fun deleteWeather(weatherData: WeatherData) {
-        localDataSource.deleteWeatherData(weatherData)
-    }
-
-
-    override fun getWeather(locationRequestData: LocationRequestData) : Single<WeatherData> =
-        remoteWeatherDataProvider.getWeather(listOf(locationRequestData))
-            .map {
-                it[0]
+            .doOnSuccess{ weatherData ->
+                saveWeather(weatherData)
             }
 
+
+    override fun deleteWeather(weatherData: WeatherData)  =
+            localDataSource.deleteWeatherData(weatherData)
+
+
+
+    override fun getWeather(locationData: LocationData): Single<WeatherData> =
+        remoteWeatherDataProvider.getWeather(listOf(locationData))
+            .map { it[0] }
 
     private fun saveWeather(weatherData: WeatherData) =
         localDataSource.saveWeatherData(weatherData)
@@ -105,14 +67,10 @@ class WeatherRepositoryImpl @Inject constructor(
     private fun updateWeather(listOfWeatherData: List<WeatherData>) =
         localDataSource.updateWeatherData(listOfWeatherData)
 
-
-    private fun isWeatherLocationWritten(locationRequestData: LocationRequestData) : Boolean =
-            localDataSource.hasThisWeatherLocation(locationRequestData)
+    private fun isWeatherLocationWritten(locationData: LocationData): Single<Boolean> =
+        localDataSource.hasThisWeatherLocation(locationData)
 
     override fun getLocationsByQuery(query: String): Single<List<LocationData>> =
-            remoteWeatherDataProvider.getGeoQueryResults(query)
-
-
-
+        remoteWeatherDataProvider.getGeoQueryResults(query)
 
 }

@@ -4,7 +4,6 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import ru.giksengik.weathersample.models.LocationData
 import ru.giksengik.weathersample.models.WeatherData
-import ru.giksengik.weathersample.network.request.LocationRequestData
 import javax.inject.Inject
 
 class RoomWeatherSource @Inject constructor(private val dao : WeatherDao) : LocalDataSource {
@@ -26,13 +25,16 @@ class RoomWeatherSource @Inject constructor(private val dao : WeatherDao) : Loca
                     ) }
             }
 
-    override fun deleteWeatherData(weatherData: WeatherData) = dao.delete(weatherData)
+    override fun getNumOfWeatherLocations(): Single<Int> = dao.getNumOfLocations()
+
+    override fun deleteWeatherData(weatherData: WeatherData) =
+        Single.fromCallable{dao.delete(weatherData)}
 
     override fun updateWeatherData(listOfWeatherData: List<WeatherData>) = dao.updateWeather(listOfWeatherData)
 
     override fun saveAllWeatherData(listOfWeatherData: List<WeatherData>) = dao.insertAll(listOfWeatherData)
 
-    override fun hasThisWeatherLocation(requestData: LocationRequestData): Boolean =
-            dao.hasThisWeather(lat = requestData.lat, lon = requestData.lon)
+    override fun hasThisWeatherLocation(locationData: LocationData): Single<Boolean> =
+            dao.hasThisWeather(lat = locationData.lat, lon = locationData.lon)
 
 }

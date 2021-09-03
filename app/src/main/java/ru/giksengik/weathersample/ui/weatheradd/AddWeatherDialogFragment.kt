@@ -38,13 +38,10 @@ class AddWeatherDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding?.buttonCancel?.setOnClickListener{
             dismiss()
         }
-
         binding?.weatherPlaceField?.apply{
-
             disposables.add(
                 this.textChanges()
                     .debounce(500, TimeUnit.MILLISECONDS)
@@ -59,16 +56,13 @@ class AddWeatherDialogFragment : DialogFragment() {
                         onTextChange()
                     }
             )
-
         }
-
         binding?.buttonOk?.setOnClickListener{
             if(currentGeoQueryResults != null && currentGeoQueryResults!!.isNotEmpty())
                 viewModel.addWeatherLocation(currentGeoQueryResults!![0])
             else
                 onIncorrectInput()
         }
-
         viewModel.viewState.observe(viewLifecycleOwner){ viewState ->
             handleState(viewState)
         }
@@ -140,6 +134,7 @@ class AddWeatherDialogFragment : DialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
+        viewModel.clear()
         binding = null
         currentGeoQueryResults = null
     }

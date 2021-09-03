@@ -2,20 +2,19 @@ package ru.giksengik.weathersample.network
 
 import io.reactivex.Single
 import ru.giksengik.weathersample.models.*
-import ru.giksengik.weathersample.network.request.LocationRequestData
 import ru.giksengik.weathersample.network.response.OneCallWeatherResponse
 import javax.inject.Inject
 
 class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJsonPlaceholder)
     : RemoteWeatherDataProvider {
 
-    override fun getWeather(listOfCoordinates: List<LocationRequestData>): Single<List<WeatherData>> {
+    override fun getWeather(listOfCoordinates: List<LocationData>): Single<List<WeatherData>> {
         var list: Single<List<OneCallWeatherResponse>> =
             api.getWeather(lat = listOfCoordinates[0].lat, lon = listOfCoordinates[0].lon)
                 .map {
                     val response = it
                     response.name =  listOfCoordinates[0].name
-                    response.region =  listOfCoordinates[0].region
+                    response.region =  listOfCoordinates[0].country
                     listOf(response)
                 }
 
@@ -26,7 +25,7 @@ class WeatherNetworkManager @Inject constructor(private val api : WeatherApiJson
                     .map{
                         val response = it
                         response.name =  listOfCoordinates[i].name
-                        response.region =  listOfCoordinates[i].region
+                        response.region =  listOfCoordinates[i].country
                         listOf(response)
                     }
             ) { t1, t2 ->
