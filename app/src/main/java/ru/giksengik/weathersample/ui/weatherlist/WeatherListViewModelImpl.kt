@@ -26,7 +26,7 @@ class WeatherListViewModelImpl @Inject constructor(private val weatherRepository
         getWeather()
     }
 
-    private fun getWeather() {
+    fun getWeather() {
         _viewState.value = WeatherListViewState.Loading
         disposables.add(weatherRepository.getAllWeather()
             .subscribeOn(Schedulers.io())

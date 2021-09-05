@@ -25,13 +25,10 @@ import java.lang.IllegalArgumentException
 
 @RunWith(MockitoJUnitRunner::class)
 class AddWeatherViewModelTest {
-
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
-
     @get:Rule
     var initRule: MockitoRule = MockitoJUnit.rule()
-
     @get:Rule
     var rxSchedulerRule = RxSchedulerRule()
 
